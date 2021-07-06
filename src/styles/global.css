@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'Noto Sans JP';
+  src: url(/fonts/NotoSansJP-Regular.otf);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  src: url(/fonts/NotoSansJP-Medium.otf);
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  src: url(/fonts/NotoSansJP-Bold.otf);
+  font-weight: bold;
+}
+
+* {
+  font-family: 'Noto Sans JP', sans-serif;
+}
