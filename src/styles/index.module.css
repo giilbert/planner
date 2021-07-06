@@ -1,0 +1,16 @@
+.center {
+  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 45vh;
+  left: 50vw;
+  text-align: center;
+}
+
+.center h1 {
+  font-size: 3rem;
+}
+
+.error {
+  color: #555;
+  font-size: small;
+}
