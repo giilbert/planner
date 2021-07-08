@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import firebase from 'firebase';
 import GoogleButton from 'react-google-button';
 
+import Spinner from '@components/Spinner';
+
 import styles from '@css/index.module.css';
 
 if (firebase.apps.length === 0)
@@ -17,7 +19,7 @@ if (firebase.apps.length === 0)
 const provider = new firebase.auth.GoogleAuthProvider();
 
 export default function IndexPage() {
-  const [signedIn, setSignedIn] = useState(false);
+  const [signedIn, setSignedIn] = useState<boolean | null>(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -27,6 +29,14 @@ export default function IndexPage() {
       setSignedIn(e ? true : false);
     });
   }, []);
+
+  if (signedIn === null)
+    return (
+      <div className={styles.center}>
+        <Spinner />
+        <p>Logging you in..</p>
+      </div>
+    );
 
   if (!signedIn)
     return (
@@ -53,16 +63,17 @@ export default function IndexPage() {
       </div>
     );
 
-  return (
-    <>
-      <div>Signed in as {firebase.auth().currentUser?.displayName}</div>
-      <button
-        onClick={() => {
-          firebase.auth().signOut();
-        }}
-      >
-        Sign out
-      </button>
-    </>
-  );
+  if (signedIn)
+    return (
+      <>
+        <div>Signed in as {firebase.auth().currentUser?.displayName}</div>
+        <button
+          onClick={() => {
+            firebase.auth().signOut();
+          }}
+        >
+          Sign out
+        </button>
+      </>
+    );
 }
