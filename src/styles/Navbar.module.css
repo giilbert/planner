@@ -1,0 +1,37 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  border-bottom: solid #888 1px;
+  width: 100vw;
+  height: 3rem;
+}
+
+.container > * {
+  margin-right: 20px;
+  height: min-content;
+}
+
+.right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.right > * {
+  margin-left: 10px;
+}
+
+.profilePicture {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background-size: 30px 30px;
+}
+
+.nameText {
+  margin-top: 0;
+  margin-bottom: 0;
+}

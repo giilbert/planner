@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import GoogleButton from 'react-google-button';
 
 import Spinner from '@components/Spinner';
+import Navbar from '@components/Navbar';
 
 import styles from '@css/index.module.css';
 
@@ -66,14 +67,7 @@ export default function IndexPage() {
   if (signedIn)
     return (
       <>
-        <div>Signed in as {firebase.auth().currentUser?.displayName}</div>
-        <button
-          onClick={() => {
-            firebase.auth().signOut();
-          }}
-        >
-          Sign out
-        </button>
+        <Navbar />
       </>
     );
 }
