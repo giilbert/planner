@@ -1,0 +1,38 @@
+.container {
+  padding: 1rem;
+  border: #aaa solid 1px;
+  border-radius: 2px;
+  box-shadow: none;
+  transform: none;
+
+  transition: box-shadow linear 100ms, transform linear 100ms;
+}
+
+.container h1 {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.container hr {
+  margin: 0.4rem 0rem;
+}
+
+.container p {
+  color: #444;
+}
+
+.container * {
+  margin: 0;
+}
+
+.container:hover {
+  cursor: pointer;
+  box-shadow: #0004 3px 5px 8px 0px;
+  transform: scale(102%);
+}
+
+.dateTime {
+  color: #aaa;
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+}

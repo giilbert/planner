@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import GoogleButton from 'react-google-button';
 
 import Spinner from '@components/Spinner';
+import EventsView from '@components/EventsView';
 import Navbar from '@components/Navbar';
 
 import styles from '@css/index.module.css';
@@ -68,6 +69,9 @@ export default function IndexPage() {
     return (
       <>
         <Navbar />
+        <div className={styles.mainContent}>
+          <EventsView />
+        </div>
       </>
     );
 }

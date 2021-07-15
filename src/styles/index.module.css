@@ -14,3 +14,7 @@
   color: #555;
   font-size: small;
 }
+
+.mainContent {
+  margin-top: 4rem; /* navbar height plus a little bit */
+}
