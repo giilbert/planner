@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from 'react';
 import firebase from 'firebase';
 import styles from '@css/Navbar.module.css';
 

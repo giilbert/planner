@@ -1,13 +1,15 @@
+import IEvent from '@utils/types/event';
+
 import styles from '@css/Event.module.css';
 
-export default function Event() {
+export default function Event(props: IEvent) {
   return (
     <div className={styles.container}>
-      <h1>This is an event</h1>
+      <h1>{props.title}</h1>
       <hr />
-      <p>Asdasd</p>
+      <p>{props.description}</p>
 
-      <p className={styles.dateTime}>12/2/31 12:20PM</p>
+      <p className={styles.dateTime}>WIP</p>
     </div>
   );
 }
