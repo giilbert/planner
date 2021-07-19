@@ -21,4 +21,9 @@ async function getEvents(authorId: string) {
   return data;
 }
 
-export { getEvents };
+async function createEvent(authorId: string, event: Event) {
+  const client = await connect();
+  await client.db('planner-main').collection('events').insertOne(event);
+}
+
+export { getEvents, createEvent };

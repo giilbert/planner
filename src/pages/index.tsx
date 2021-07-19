@@ -26,8 +26,6 @@ export default function IndexPage() {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((e) => {
-      console.log(e);
-
       setSignedIn(e ? true : false);
     });
   }, []);
@@ -40,31 +38,6 @@ export default function IndexPage() {
       </div>
     );
 
-  if (!signedIn)
-    return (
-      <div className={styles.center}>
-        <h1>Planner</h1>
-        <p>A simple way to organize your day</p>
-
-        <GoogleButton
-          type="light"
-          onClick={async () => {
-            try {
-              await firebase
-                .auth()
-                .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-              await firebase.auth().signInWithPopup(provider);
-            } catch (e) {
-              console.error(e);
-              setError('An error occured.');
-            }
-          }}
-        />
-
-        <p className={styles.error}>{error}</p>
-      </div>
-    );
-
   if (signedIn)
     return (
       <>
@@ -74,4 +47,28 @@ export default function IndexPage() {
         </div>
       </>
     );
+
+  return (
+    <div className={styles.center}>
+      <h1>Planner</h1>
+      <p>A simple way to organize your day</p>
+
+      <GoogleButton
+        type="light"
+        onClick={async () => {
+          try {
+            await firebase
+              .auth()
+              .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+            await firebase.auth().signInWithPopup(provider);
+          } catch (e) {
+            console.error(e);
+            setError('An error occured.');
+          }
+        }}
+      />
+
+      <p className={styles.error}>{error}</p>
+    </div>
+  );
 }
