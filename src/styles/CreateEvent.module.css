@@ -65,6 +65,10 @@
   font-size: 0.8rem;
 }
 
+.inputContainer > p > span {
+  color: #aaa;
+}
+
 .inputContainer:focus-within {
   box-shadow: #85ceff 0px 0px 0px 3px, #aaaa 3px 3px 1rem;
 }
@@ -78,5 +82,10 @@
   letter-spacing: 0.5px;
   color: #fff;
   width: 15rem;
-  margin: 2rem auto;
+  margin: 3rem auto 0 auto;
+}
+
+.errorMessage {
+  color: #ff4d4d;
+  font-size: 0.8rem;
 }

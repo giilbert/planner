@@ -1,5 +1,5 @@
 import { useEffect, createRef } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import styles from '@css/CreateEvent.module.css';
 import commons from '@css/commons.module.css';
@@ -41,16 +41,34 @@ export default function CreateEvent({ close }: Props) {
           onSubmit={(values) => {
             alert(JSON.stringify(values, null, 2));
           }}
+          validate={(values) => {
+            const errors: {
+              [key: string]: string;
+            } = {};
+            if (values.title.trim() === '') {
+              errors.title = 'Title cannot be empty';
+            }
+
+            return errors;
+          }}
         >
           <Form className={styles.form}>
             <div className={styles.inputContainer}>
               <p>TITLE</p>
               <Field name="title" type="text" />
+              <span className={styles.errorMessage}>
+                <ErrorMessage name="title" />
+              </span>
             </div>
 
             <div className={styles.inputContainer}>
-              <p>DESCRIPTION</p>
+              <p>
+                DESCRIPTION <span>(OPTIONAL)</span>
+              </p>
               <Field name="description" type="text" />
+              <span className={styles.errorMessage}>
+                <ErrorMessage name="description" />
+              </span>
             </div>
 
             <button
