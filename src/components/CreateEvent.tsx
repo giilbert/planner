@@ -1,4 +1,5 @@
 import { useEffect, createRef } from 'react';
+import { Formik, Form, Field } from 'formik';
 
 import styles from '@css/CreateEvent.module.css';
 
@@ -31,8 +32,32 @@ export default function CreateEvent({ close }: Props) {
         ref={mainRef}
       >
         <div onClick={close} className={styles.nevermind}>
-          Nevermind
+          Close
         </div>
+
+        <Formik
+          initialValues={{ title: '', description: '' }}
+          onSubmit={async (values) => {
+            await new Promise((resolve) => setTimeout(resolve, 500));
+            alert(JSON.stringify(values, null, 2));
+          }}
+        >
+          <Form className={styles.form}>
+            <div className={styles.inputContainer}>
+              <p>TITLE</p>
+              <Field name="title" type="text" />
+            </div>
+
+            <div className={styles.inputContainer}>
+              <p>DESCRIPTION</p>
+              <Field name="description" type="text" />
+            </div>
+
+            <button type="submit" className={styles.submit}>
+              Create Event
+            </button>
+          </Form>
+        </Formik>
       </div>
     </div>
   );

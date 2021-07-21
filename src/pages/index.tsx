@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 import firebase from 'firebase';
 import GoogleButton from 'react-google-button';
 
@@ -41,6 +42,9 @@ export default function IndexPage() {
   if (signedIn)
     return (
       <>
+        <Head>
+          <title>some name idk</title>
+        </Head>
         <Navbar />
         <div className={styles.mainContent}>
           <EventsView />
@@ -50,6 +54,10 @@ export default function IndexPage() {
 
   return (
     <div className={styles.center}>
+      <Head>
+        <title>some name idk - Login</title>
+      </Head>
+
       <h1>Planner</h1>
       <p>A simple way to organize your day</p>
 
