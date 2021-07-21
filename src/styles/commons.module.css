@@ -1,0 +1,25 @@
+.button {
+  padding: 0.8rem 1.4rem;
+  background-color: #2eacff;
+  color: #fff;
+  border: none;
+}
+
+.button:hover {
+  cursor: pointer;
+  filter: brightness(95%);
+}
+
+.textButton {
+  color: #2eacff;
+}
+
+.textButton:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.buttonSmall {
+  padding: 0.3rem 0.8rem;
+  border-radius: 5px;
+}

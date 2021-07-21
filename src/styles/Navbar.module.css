@@ -9,7 +9,7 @@
   height: 3rem;
 }
 
-.container > * {
+.container > *:not(button) {
   margin-right: 20px;
   height: min-content;
 }
@@ -34,4 +34,17 @@
 .nameText {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.createEventButton {
+  padding: 0rem 2rem;
+  margin-left: 0.25rem;
+  height: 2.5rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.createEventButton > svg {
+  margin-right: 0.5rem;
 }

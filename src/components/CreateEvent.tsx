@@ -2,6 +2,7 @@ import { useEffect, createRef } from 'react';
 import { Formik, Form, Field } from 'formik';
 
 import styles from '@css/CreateEvent.module.css';
+import commons from '@css/commons.module.css';
 
 interface Props {
   close: () => void;
@@ -37,8 +38,7 @@ export default function CreateEvent({ close }: Props) {
 
         <Formik
           initialValues={{ title: '', description: '' }}
-          onSubmit={async (values) => {
-            await new Promise((resolve) => setTimeout(resolve, 500));
+          onSubmit={(values) => {
             alert(JSON.stringify(values, null, 2));
           }}
         >
@@ -53,7 +53,10 @@ export default function CreateEvent({ close }: Props) {
               <Field name="description" type="text" />
             </div>
 
-            <button type="submit" className={styles.submit}>
+            <button
+              type="submit"
+              className={`${commons.button} ${styles.submit}`}
+            >
               Create Event
             </button>
           </Form>
