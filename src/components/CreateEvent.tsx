@@ -1,5 +1,6 @@
-import { useEffect, createRef } from 'react';
+import { useEffect, createRef, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import firebase from 'firebase';
 
 import styles from '@css/CreateEvent.module.css';
 import commons from '@css/commons.module.css';
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export default function CreateEvent({ close }: Props) {
+  const [error, setError] = useState('');
   const mainRef = createRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -38,8 +40,26 @@ export default function CreateEvent({ close }: Props) {
 
         <Formik
           initialValues={{ title: '', description: '' }}
-          onSubmit={(values) => {
-            alert(JSON.stringify(values, null, 2));
+          onSubmit={async (values) => {
+            // post to server
+            const res = await fetch('/api/createEvent', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${await firebase
+                  .auth()
+                  .currentUser?.getIdToken()}`,
+              },
+              body: JSON.stringify(values),
+            });
+
+            const json = await res.json();
+
+            if (json.error) {
+              setError(json.error);
+            } else {
+              close();
+            }
           }}
           validate={(values) => {
             const errors: {
@@ -70,6 +90,8 @@ export default function CreateEvent({ close }: Props) {
                 <ErrorMessage name="description" />
               </span>
             </div>
+
+            <p className={styles.errorMessage}>{error}</p>
 
             <button
               type="submit"

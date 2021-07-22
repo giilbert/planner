@@ -9,6 +9,7 @@ async function connect() {
 }
 
 async function getEvents(authorId: string) {
+  console.log('fetching from db');
   const client = await connect();
   const data: Event[] = await client
     .db('planner-main')
@@ -21,7 +22,7 @@ async function getEvents(authorId: string) {
   return data;
 }
 
-async function createEvent(authorId: string, event: Event) {
+async function createEvent(event: Event) {
   const client = await connect();
   await client.db('planner-main').collection('events').insertOne(event);
 }

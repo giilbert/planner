@@ -11,37 +11,37 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // // log into firebase admin sdk
-  // if (admin.apps.length === 0)
-  //   admin.initializeApp({
-  //     credential: admin.credential.cert({
-  //       clientEmail: serviceAccount.client_email,
-  //       privateKey: serviceAccount.private_key,
-  //       projectId: serviceAccount.project_id,
-  //     }),
-  //   });
+  // log into firebase admin sdk
+  if (admin.apps.length === 0)
+    admin.initializeApp({
+      credential: admin.credential.cert({
+        clientEmail: serviceAccount.client_email,
+        privateKey: serviceAccount.private_key,
+        projectId: serviceAccount.project_id,
+      }),
+    });
 
-  // const idToken = req.headers.authorization?.split(' ')[1];
+  const idToken = req.headers.authorization?.split(' ')[1];
 
-  // if (!idToken) {
-  //   res.status(403).json({
-  //     error: 'Not authenticated',
-  //   });
+  if (!idToken) {
+    res.status(403).json({
+      error: 'Not authenticated',
+    });
 
-  //   return;
-  // }
+    return;
+  }
 
-  // const user = await admin.auth().verifyIdToken(idToken);
+  const user = await admin.auth().verifyIdToken(idToken);
 
   console.log({
     ...req.body,
-    authorId: 'asd',
+    authorId: user.uid,
     createdAt: Date.now(),
   });
 
   const complete = isACompleteEvent({
     ...req.body,
-    authorId: 'asd',
+    authorId: user.uid,
     createdAt: Date.now(),
   });
 
@@ -52,7 +52,12 @@ export default async function handler(
 
     return;
   }
-  console.log(complete);
+
+  await createEvent({
+    ...req.body,
+    authorId: user.uid,
+    createdAt: Date.now(),
+  });
 
   res.status(200).end();
 }
@@ -60,8 +65,7 @@ export default async function handler(
 function isACompleteEvent(o: Event): boolean {
   return !(
     Object.values({
-      title: !o.title,
-      description: !o.description,
+      title: o.title === '',
       authorId: !o.authorId,
       createdAt: !o.createdAt,
     }).find((v) => v === true) ?? false
