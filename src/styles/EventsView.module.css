@@ -1,3 +1,7 @@
 .container {
   width: 300px;
 }
+
+.container > * {
+  margin-bottom: 0.4rem;
+}

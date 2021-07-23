@@ -33,7 +33,7 @@
   flex-direction: column;
 }
 
-.form input {
+.form > .inputContainer > input {
   border-radius: 0;
   border: none;
   outline: none;
@@ -44,7 +44,7 @@
   transition: box-shadow 100ms linear;
 }
 
-.form input:focus {
+.form > .inputContainer > input:focus {
   box-shadow: #85ceff 0px 2px 0px 0px;
 }
 
@@ -58,7 +58,7 @@
   transition: box-shadow 100ms linear;
 }
 
-.inputContainer p {
+.inputContainer > p {
   margin: 0 0 0.3rem 0;
   color: #555;
   font-weight: bold;

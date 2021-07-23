@@ -1,14 +1,18 @@
 import { useEffect, createRef, useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FieldProps } from 'formik';
 import firebase from 'firebase';
+
+import DateSelector from './DateSelector';
 
 import styles from '@css/CreateEvent.module.css';
 import commons from '@css/commons.module.css';
+import { validateDate } from '@utils/dateUtils';
 
 interface Props {
   close: () => void;
 }
 
+const today = new Date();
 export default function CreateEvent({ close }: Props) {
   const [error, setError] = useState('');
   const mainRef = createRef<HTMLDivElement>();
@@ -39,9 +43,23 @@ export default function CreateEvent({ close }: Props) {
         </div>
 
         <Formik
-          initialValues={{ title: '', description: '' }}
+          initialValues={{
+            title: '',
+            description: '',
+            date: {
+              month: today.getMonth(),
+              date: today.getDate(),
+              year: today.getFullYear(),
+            },
+          }}
           onSubmit={async (values) => {
             // post to server
+            if (!window.navigator.onLine) {
+              setError('No internet connection detected.');
+              setTimeout(() => setError(''), 5000);
+              return;
+            }
+
             const res = await fetch('/api/createEvent', {
               method: 'POST',
               headers: {
@@ -53,13 +71,22 @@ export default function CreateEvent({ close }: Props) {
               body: JSON.stringify(values),
             });
 
-            const json = await res.json();
-
-            if (json.error) {
-              setError(json.error);
-            } else {
-              close();
+            if (!res.ok) {
+              setError('An error occured.');
+              setTimeout(() => setError(''), 5000);
+              return;
             }
+
+            let json;
+            try {
+              json = await res.json();
+            } catch {}
+
+            if (json?.error) {
+              setError(json.error);
+            }
+
+            close();
           }}
           validate={(values) => {
             const errors: {
@@ -67,6 +94,10 @@ export default function CreateEvent({ close }: Props) {
             } = {};
             if (values.title.trim() === '') {
               errors.title = 'Title cannot be empty';
+            }
+
+            if (!validateDate(values.date)) {
+              errors.date = 'Invalid date';
             }
 
             return errors;
@@ -88,6 +119,20 @@ export default function CreateEvent({ close }: Props) {
               <Field name="description" type="text" />
               <span className={styles.errorMessage}>
                 <ErrorMessage name="description" />
+              </span>
+            </div>
+
+            <div className={styles.inputContainer}>
+              <p>DATE</p>
+              <Field name="date">
+                {({ form }: FieldProps) => (
+                  <div>
+                    <DateSelector {...form} />
+                  </div>
+                )}
+              </Field>
+              <span className={styles.errorMessage}>
+                <ErrorMessage name="date" />
               </span>
             </div>
 

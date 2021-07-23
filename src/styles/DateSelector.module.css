@@ -1,0 +1,52 @@
+.classicInput {
+  display: flex;
+  flex-direction: row;
+}
+
+.classicInput > input,
+.classicInput > select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.4rem;
+  border: none;
+  font-size: 1.2rem;
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: bold;
+}
+
+.classicInput > p {
+  margin: 0;
+  font-weight: bold;
+  color: #555;
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+}
+
+.select options {
+  padding: 0.2rem 0;
+}
+
+.date {
+  width: 20%;
+  text-align: center;
+}
+
+.year {
+  width: 40%;
+  text-align: center;
+}
+
+.classicInput > input::-webkit-outer-spin-button,
+.classicInput > input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* firefox */
+i.classicInput > input[type='number'] {
+  -moz-appearance: textfield;
+}
