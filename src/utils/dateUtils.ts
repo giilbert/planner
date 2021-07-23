@@ -46,4 +46,15 @@ function validateDate({
   return true;
 }
 
-export { convertMonthStringToNumber, validateDate };
+function toTimestamp({
+  date,
+  month,
+  year,
+}: {
+  date: number;
+  month: number;
+  year: number;
+}): number {
+  return new Date(year, month, date).getTime();
+}
+export { convertMonthStringToNumber, validateDate, toTimestamp };

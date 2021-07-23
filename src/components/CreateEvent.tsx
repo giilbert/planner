@@ -1,12 +1,15 @@
 import { useEffect, createRef, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage, FieldProps } from 'formik';
 import firebase from 'firebase';
+import { EventEmitter } from 'events';
 
 import DateSelector from './DateSelector';
 
 import styles from '@css/CreateEvent.module.css';
 import commons from '@css/commons.module.css';
-import { validateDate } from '@utils/dateUtils';
+import { toTimestamp, validateDate } from '@utils/dateUtils';
+
+const events = new EventEmitter();
 
 interface Props {
   close: () => void;
@@ -68,7 +71,10 @@ export default function CreateEvent({ close }: Props) {
                   .auth()
                   .currentUser?.getIdToken()}`,
               },
-              body: JSON.stringify(values),
+              body: JSON.stringify({
+                ...values,
+                date: toTimestamp(values.date)
+              }),
             });
 
             if (!res.ok) {
@@ -86,6 +92,7 @@ export default function CreateEvent({ close }: Props) {
               setError(json.error);
             }
 
+            events.emit('change');
             close();
           }}
           validate={(values) => {
@@ -150,3 +157,5 @@ export default function CreateEvent({ close }: Props) {
     </div>
   );
 }
+
+export { events };
