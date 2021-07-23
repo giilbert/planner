@@ -73,7 +73,7 @@ export default function CreateEvent({ close }: Props) {
               },
               body: JSON.stringify({
                 ...values,
-                date: toTimestamp(values.date)
+                dateTime: toTimestamp(values.date),
               }),
             });
 

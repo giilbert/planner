@@ -17,6 +17,9 @@ async function getEvents(authorId: string) {
     .find({
       authorId,
     })
+    .sort({
+      dateTime: 1,
+    })
     .toArray();
 
   return data;

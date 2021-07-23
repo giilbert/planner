@@ -9,7 +9,11 @@ export default function Event(props: IEvent) {
       <hr />
       <p>{props.description}</p>
 
-      <p className={styles.dateTime}>WIP</p>
+      <p className={styles.dateTime}>
+        {new Date(props.dateTime).toLocaleString('en-us', {
+          dateStyle: 'full',
+        })}
+      </p>
     </div>
   );
 }

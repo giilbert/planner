@@ -3,6 +3,7 @@ interface Event {
   description: string;
   createdAt: Date;
   authorId: string;
+  dateTime: number;
 }
 
 export default Event;

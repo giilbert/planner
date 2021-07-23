@@ -68,6 +68,7 @@ function isACompleteEvent(o: Event): boolean {
       title: o.title === '',
       authorId: !o.authorId,
       createdAt: !o.createdAt,
+      dateTime: isNaN(o.dateTime),
     }).find((v) => v === true) ?? false
   );
 }
