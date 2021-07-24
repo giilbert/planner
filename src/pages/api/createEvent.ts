@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import admin from 'firebase-admin';
-import { ServiceAccount } from '@google-cloud/storage';
 
 import Event from '@utils/types/event';
 import { createEvent } from '@utils/server/db';
