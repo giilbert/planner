@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { FormikProps } from 'formik';
 
-import { convertMonthStringToNumber } from '@utils/dateUtils';
+import {
+  convertMonthNumberToString,
+  convertMonthStringToNumber,
+  validateDate,
+} from '@utils/dateUtils';
 
 import styles from '@css/DateSelector.module.css';
 
@@ -22,6 +26,7 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
       <div className={styles.classicInput}>
         <select
           className={styles.select}
+          value={convertMonthNumberToString(currentDate.month)}
           defaultValue={today.toLocaleDateString('en-us', { month: 'long' })}
           onChange={(e) => {
             const month = convertMonthStringToNumber(e.target.value);
@@ -52,7 +57,7 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
           className={styles.date}
           autoComplete="off"
           placeholder="Date"
-          defaultValue={today.getDate()}
+          value={currentDate.date}
           onChange={(e) => {
             setCurrentDate({
               ...currentDate,
@@ -68,7 +73,7 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
           className={styles.year}
           autoComplete="off"
           placeholder="Year"
-          defaultValue={today.getFullYear()}
+          value={currentDate.year}
           onChange={(e) => {
             setCurrentDate({
               ...currentDate,
@@ -77,6 +82,93 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
           }}
         />
       </div>
+
+      {/* calendar input */}
+      <div className={styles.calendarContainer}>
+        <div className={styles.calendarHead}>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+
+              // months are offset by 1, 0 is jan
+              if (currentDate.month === 0) {
+                setCurrentDate({
+                  ...currentDate,
+                  month: 11,
+                  year: currentDate.year - 1,
+                });
+                return;
+              }
+
+              setCurrentDate({
+                ...currentDate,
+                month: currentDate.month - 1,
+              });
+            }}
+          >
+            {'<'}
+          </button>
+          <p>{convertMonthNumberToString(currentDate.month)}</p>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+
+              if (currentDate.month === 11) {
+                setCurrentDate({
+                  ...currentDate,
+                  month: 0,
+                  year: currentDate.year + 1,
+                });
+                return;
+              }
+
+              setCurrentDate({
+                ...currentDate,
+                month: currentDate.month + 1,
+              });
+            }}
+          >
+            {'>'}
+          </button>
+        </div>
+
+        <Calendar currentDate={currentDate} />
+      </div>
+    </div>
+  );
+}
+
+function Calendar({
+  currentDate,
+}: {
+  currentDate: { month: number; date: number; year: number };
+}) {
+  const firstDay = new Date(currentDate.year, currentDate.month, 1);
+  // the offset in the start of the month
+  const offset = firstDay.getDay();
+
+  return (
+    <div className={styles.calendar}>
+      {offset !== 0 &&
+        Array(offset)
+          .fill(0)
+          .map((_, i) => <p key={i + ' offset'}></p>)}
+
+      {Array(35)
+        .fill(0)
+        .map((_, i) => {
+          if (i === 0) return;
+          const date = new Date(currentDate.year, currentDate.month, i);
+
+          // check if date is in the month
+          if (date.getMonth() === currentDate.month) {
+            // date is in the month
+            return <p>{i}</p>;
+          } else {
+            // date is not in the month ie: 7/32 == 8/1
+            return <p></p>;
+          }
+        })}
     </div>
   );
 }

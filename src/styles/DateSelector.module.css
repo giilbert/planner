@@ -50,3 +50,24 @@
 i.classicInput > input[type='number'] {
   -moz-appearance: textfield;
 }
+
+.calendarContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.calendarHead {
+  display: flex;
+  flex-direction: row;
+}
+
+.calendar {
+  width: 100%;
+  background-color: #ddd;
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+}
+
+.calendarCell {
+}

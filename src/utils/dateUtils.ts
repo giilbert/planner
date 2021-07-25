@@ -15,6 +15,23 @@ function convertMonthStringToNumber(month: string) {
   ].indexOf(month.toUpperCase());
 }
 
+function convertMonthNumberToString(month: number) {
+  return [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ][month];
+}
+
 const numberOfDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 // make sure there are right number of days in a month and everything else
@@ -57,4 +74,9 @@ function toTimestamp({
 }): number {
   return new Date(year, month, date).getTime();
 }
-export { convertMonthStringToNumber, validateDate, toTimestamp };
+export {
+  convertMonthStringToNumber,
+  convertMonthNumberToString,
+  validateDate,
+  toTimestamp,
+};
