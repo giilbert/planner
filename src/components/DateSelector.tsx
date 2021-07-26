@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { FormikProps } from 'formik';
 
 import {
@@ -27,7 +27,6 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
         <select
           className={styles.select}
           value={convertMonthNumberToString(currentDate.month)}
-          defaultValue={today.toLocaleDateString('en-us', { month: 'long' })}
           onChange={(e) => {
             const month = convertMonthStringToNumber(e.target.value);
             setCurrentDate({
@@ -106,7 +105,7 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
               });
             }}
           >
-            {'<'}
+            <LeftArrow />
           </button>
           <p>{convertMonthNumberToString(currentDate.month)}</p>
           <button
@@ -128,11 +127,11 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
               });
             }}
           >
-            {'>'}
+            <RightArrow />
           </button>
         </div>
 
-        <Calendar currentDate={currentDate} />
+        <Calendar currentDate={currentDate} setCurrentDate={setCurrentDate} />
       </div>
     </div>
   );
@@ -140,8 +139,16 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
 
 function Calendar({
   currentDate,
+  setCurrentDate,
 }: {
   currentDate: { month: number; date: number; year: number };
+  setCurrentDate: Dispatch<
+    SetStateAction<{
+      month: number;
+      date: number;
+      year: number;
+    }>
+  >;
 }) {
   const firstDay = new Date(currentDate.year, currentDate.month, 1);
   // the offset in the start of the month
@@ -163,13 +170,79 @@ function Calendar({
           // check if date is in the month
           if (date.getMonth() === currentDate.month) {
             // date is in the month
-            return <p>{i}</p>;
+
+            if (currentDate.date === i) {
+              // date is selected
+              return (
+                <div className={styles.calendarCellSelected} key={i}>
+                  <p>{i}</p>
+                </div>
+              );
+            }
+
+            return (
+              <div
+                className={styles.calendarCell}
+                onClick={() => {
+                  setCurrentDate({
+                    ...currentDate,
+                    date: i,
+                  });
+                }}
+                key={i}
+              >
+                <p>{i}</p>
+              </div>
+            );
           } else {
             // date is not in the month ie: 7/32 == 8/1
-            return <p></p>;
+            if (i > 31) return;
+            return <p key={i}></p>;
           }
         })}
     </div>
+  );
+}
+
+function LeftArrow() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="#111"
+      width="1.5rem"
+      height="1.5rem"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M15 19l-7-7 7-7"
+      />
+    </svg>
+  );
+}
+
+function RightArrow() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="#111"
+      width="1.5rem"
+      height="1.5rem"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M9 5l7 7-7 7"
+      />
+    </svg>
   );
 }
 

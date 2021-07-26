@@ -58,16 +58,67 @@ i.classicInput > input[type='number'] {
 }
 
 .calendarHead {
+  margin: auto;
+  width: 20rem;
+  display: grid;
+  grid-template-columns: 3rem auto 3rem;
+}
+
+.calendarHead p {
+  font-size: 2rem;
+  margin: 0;
+  text-align: center;
+}
+
+.calendarHead button {
+  width: 3rem;
+  height: 3rem;
+  background: transparent;
+  border: none;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendarHead button:hover {
+  cursor: pointer;
+  background: #eee;
+  border-radius: 999px;
 }
 
 .calendar {
-  width: 100%;
-  background-color: #ddd;
   display: grid;
-  grid-template-columns: repeat(7, auto);
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem 0.5rem;
+  border: #aaa solid 1px;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0.2rem;
 }
 
 .calendarCell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.7rem;
+  background-color: transparent;
+  transition: background-color 100ms linear;
+}
+
+.calendarCell:hover {
+  cursor: pointer;
+  border-radius: 0.7rem;
+  background-color: #dfdfdf;
+}
+
+.calendarCellSelected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.7rem;
+  background: #88c9f5;
+  width: 3rem;
+  height: 3rem;
 }
