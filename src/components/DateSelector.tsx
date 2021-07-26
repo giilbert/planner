@@ -82,6 +82,12 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
         />
       </div>
 
+      <hr
+        style={{
+          marginTop: 20,
+        }}
+      />
+
       {/* calendar input */}
       <div className={styles.calendarContainer}>
         <div className={styles.calendarHead}>
@@ -171,10 +177,17 @@ function Calendar({
           if (date.getMonth() === currentDate.month) {
             // date is in the month
 
+            const isWeekend = date.getDay() === 6 || date.getDay() === 0;
+
             if (currentDate.date === i) {
               // date is selected
               return (
-                <div className={styles.calendarCellSelected} key={i}>
+                <div
+                  className={`${styles.calendarCellSelected} ${
+                    isWeekend && styles.weekend
+                  }`}
+                  key={i}
+                >
                   <p>{i}</p>
                 </div>
               );
@@ -182,7 +195,9 @@ function Calendar({
 
             return (
               <div
-                className={styles.calendarCell}
+                className={`${styles.calendarCell} ${
+                  isWeekend && styles.weekend
+                }`}
                 onClick={() => {
                   setCurrentDate({
                     ...currentDate,
