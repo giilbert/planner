@@ -182,19 +182,19 @@ function Calendar({
             if (currentDate.date === i) {
               // date is selected
               return (
-                <div
+                <button
                   className={`${styles.calendarCellSelected} ${
                     isWeekend && styles.weekend
                   }`}
                   key={i}
                 >
                   <p>{i}</p>
-                </div>
+                </button>
               );
             }
 
             return (
-              <div
+              <button
                 className={`${styles.calendarCell} ${
                   isWeekend && styles.weekend
                 }`}
@@ -207,7 +207,7 @@ function Calendar({
                 key={i}
               >
                 <p>{i}</p>
-              </div>
+              </button>
             );
           } else {
             // date is not in the month ie: 7/32 == 8/1
