@@ -1,0 +1,50 @@
+.container {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: 100px 10px 100px auto;
+}
+
+.inputContainer {
+  width: 100%;
+}
+
+.inputContainer > input {
+  text-align: center;
+  outline: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.4rem;
+  border: none;
+  font-size: 1.2rem;
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: bold;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.apmSelector {
+  outline: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.4rem;
+  border: none;
+  font-size: 1.2rem;
+  background-color: #f0f0f0;
+  color: #333;
+  height: min-content;
+  width: 5rem;
+  font-weight: bold;
+}
+
+.apmSelector:hover {
+  cursor: pointer;
+}
+
+.colon {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
