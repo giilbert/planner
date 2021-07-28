@@ -4,7 +4,7 @@ import { FormikProps } from 'formik';
 import {
   convertMonthNumberToString,
   convertMonthStringToNumber,
-  validateDate,
+  numberOfDays,
 } from '@utils/dateUtils';
 
 import styles from '@css/DateSelector.module.css';
@@ -211,7 +211,7 @@ function Calendar({
             );
           } else {
             // date is not in the month ie: 7/32 == 8/1
-            if (i > 31) return;
+            if (i > numberOfDays[currentDate.month]) return;
             return <p key={i}></p>;
           }
         })}

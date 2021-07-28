@@ -74,9 +74,11 @@ function toTimestamp({
 }): number {
   return new Date(year, month, date).getTime();
 }
+
 export {
   convertMonthStringToNumber,
   convertMonthNumberToString,
   validateDate,
   toTimestamp,
+  numberOfDays,
 };
