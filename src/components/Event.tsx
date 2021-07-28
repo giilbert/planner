@@ -11,7 +11,18 @@ export default function Event(props: IEvent) {
 
       <p className={styles.dateTime}>
         {new Date(props.dateTime).toLocaleString('en-us', {
-          dateStyle: 'full',
+          weekday: 'short',
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+        })}
+
+        <br />
+
+        {new Date(props.dateTime).toLocaleString('en-us', {
+          hour: 'numeric',
+          hour12: true,
+          minute: '2-digit',
         })}
       </p>
     </div>

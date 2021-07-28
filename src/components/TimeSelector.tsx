@@ -91,8 +91,8 @@ function TimeSelector({ setFieldValue }: FormikProps<any>) {
               pm: on,
             });
           }}
-          onText={'AM'}
-          offText={'PM'}
+          onText={'PM'}
+          offText={'AM'}
         />
       </div>
     </div>

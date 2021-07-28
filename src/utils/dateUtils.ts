@@ -63,16 +63,28 @@ function validateDate({
   return true;
 }
 
-function toTimestamp({
-  date,
-  month,
-  year,
-}: {
-  date: number;
-  month: number;
-  year: number;
-}): number {
-  return new Date(year, month, date).getTime();
+function toTimestamp(
+  date: {
+    date: number;
+    month: number;
+    year: number;
+  },
+
+  time: {
+    hour: number;
+    minutes: number;
+    pm: boolean;
+  }
+): number {
+  const hour = time.pm === true ? time.hour + 12 : time.hour;
+
+  return new Date(
+    date.year,
+    date.month,
+    date.date,
+    hour,
+    time.minutes
+  ).getTime();
 }
 
 export {

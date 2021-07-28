@@ -28,6 +28,47 @@ export default function CreateEvent({ close }: Props) {
     }, 100);
   }, [mainRef]);
 
+  const formSubmit = async (values: any) => {
+    // post to server
+    if (!window.navigator.onLine) {
+      setError('No internet connection detected.');
+      setTimeout(() => setError(''), 5000);
+      return;
+    }
+
+    const res = await fetch('/api/createEvent', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${await firebase
+          .auth()
+          .currentUser?.getIdToken()}`,
+      },
+      body: JSON.stringify({
+        ...values,
+        dateTime: toTimestamp(values.date, values.time),
+      }),
+    });
+
+    if (!res.ok) {
+      setError('An error occured.');
+      setTimeout(() => setError(''), 5000);
+      return;
+    }
+
+    let json;
+    try {
+      json = await res.json();
+    } catch {}
+
+    if (json?.error) {
+      setError(json.error);
+    }
+
+    events.emit('change');
+    close();
+  };
+
   return (
     <div
       className={styles.background}
@@ -55,47 +96,13 @@ export default function CreateEvent({ close }: Props) {
               date: today.getDate(),
               year: today.getFullYear(),
             },
+            time: {
+              hour: today.getHours() % 12,
+              minutes: today.getMinutes(),
+              pm: today.getHours() > 12,
+            },
           }}
-          onSubmit={async (values) => {
-            // post to server
-            if (!window.navigator.onLine) {
-              setError('No internet connection detected.');
-              setTimeout(() => setError(''), 5000);
-              return;
-            }
-
-            const res = await fetch('/api/createEvent', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${await firebase
-                  .auth()
-                  .currentUser?.getIdToken()}`,
-              },
-              body: JSON.stringify({
-                ...values,
-                dateTime: toTimestamp(values.date),
-              }),
-            });
-
-            if (!res.ok) {
-              setError('An error occured.');
-              setTimeout(() => setError(''), 5000);
-              return;
-            }
-
-            let json;
-            try {
-              json = await res.json();
-            } catch {}
-
-            if (json?.error) {
-              setError(json.error);
-            }
-
-            events.emit('change');
-            close();
-          }}
+          onSubmit={formSubmit}
           validate={(values) => {
             const errors: {
               [key: string]: string;
