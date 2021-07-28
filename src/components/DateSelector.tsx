@@ -92,6 +92,7 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
       <div className={styles.calendarContainer}>
         <div className={styles.calendarHead}>
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
 
@@ -115,6 +116,7 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
           </button>
           <p>{convertMonthNumberToString(currentDate.month)}</p>
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
 
@@ -183,6 +185,7 @@ function Calendar({
               // date is selected
               return (
                 <button
+                  type="button"
                   className={`${styles.calendarCellSelected} ${
                     isWeekend && styles.weekend
                   }`}
@@ -195,6 +198,7 @@ function Calendar({
 
             return (
               <button
+                type="button"
                 className={`${styles.calendarCell} ${
                   isWeekend && styles.weekend
                 }`}

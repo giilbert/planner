@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import { EventEmitter } from 'events';
 
 import DateSelector from './DateSelector';
+import TimeSelector from './TimeSelector';
 
 import styles from '@css/CreateEvent.module.css';
 import commons from '@css/commons.module.css';
@@ -140,6 +141,20 @@ export default function CreateEvent({ close }: Props) {
               </Field>
               <span className={styles.errorMessage}>
                 <ErrorMessage name="date" />
+              </span>
+            </div>
+
+            <div className={styles.inputContainer}>
+              <p>TIME</p>
+              <Field name="time">
+                {({ form }: FieldProps) => (
+                  <div>
+                    <TimeSelector {...form} />
+                  </div>
+                )}
+              </Field>
+              <span className={styles.errorMessage}>
+                <ErrorMessage name="time" />
               </span>
             </div>
 
