@@ -67,7 +67,7 @@ export default function IndexPage() {
           try {
             await firebase
               .auth()
-              .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+              .setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
             const isSafari =
               navigator.vendor &&
