@@ -68,7 +68,23 @@ export default function IndexPage() {
             await firebase
               .auth()
               .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-            await firebase.auth().signInWithPopup(provider);
+
+            const isSafari =
+              navigator.vendor &&
+              navigator.vendor.indexOf('Apple') > -1 &&
+              navigator.userAgent &&
+              navigator.userAgent.indexOf('CriOS') == -1 &&
+              navigator.userAgent.indexOf('FxiOS') == -1;
+
+            if (!isSafari) {
+              // chrome
+              await firebase.auth().signInWithPopup(provider);
+            } else {
+              // safari
+              await firebase.auth().signInWithRedirect(provider);
+            }
+
+            // safari does not like popups
           } catch (e) {
             console.error(e);
             setError('An error occured.');
