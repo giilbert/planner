@@ -74,9 +74,12 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
           placeholder="Year"
           value={currentDate.year}
           onChange={(e) => {
+            const year = parseInt(e.target.value);
+
             setCurrentDate({
               ...currentDate,
-              year: parseInt(e.target.value),
+              // fix error when the year field is blank or too high
+              year: isNaN(year) || year > 100000 ? today.getFullYear() : year,
             });
           }}
         />
