@@ -24,11 +24,37 @@ export default function EventsView() {
   if (error) return <p>an error occured.</p>;
   if (!data) return <p>loading...</p>;
 
+  const todayEvents = filterToday(data);
+  const tommorowEvents = filterTommorow(data);
+
   return (
     <div className={styles.container}>
-      {data.map((v: IEvent, i) => (
-        <Event {...v} key={i} />
+      <p className={styles.label}>TODAY</p>
+      {todayEvents.map((v, i) => {
+        return <Event {...v} key={i + ' today'} />;
+      })}
+
+      <p className={styles.label}>TOMMOROW</p>
+      {tommorowEvents.map((v, i) => (
+        <Event {...v} key={i + ' tommorow'} />
+      ))}
+
+      <p className={styles.label}>ALL</p>
+      {data.map((v, i) => (
+        <Event {...v} key={i + ' all'} />
       ))}
     </div>
+  );
+}
+
+function filterToday(data: IEvent[]) {
+  const today = new Date();
+  return data.filter((v) => new Date(v.dateTime).getDate() === today.getDate());
+}
+
+function filterTommorow(data: IEvent[]) {
+  const today = new Date();
+  return data.filter(
+    (v) => new Date(v.dateTime).getDate() === today.getDate() + 1
   );
 }
