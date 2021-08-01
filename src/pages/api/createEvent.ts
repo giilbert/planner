@@ -4,7 +4,7 @@ import admin from 'firebase-admin';
 import Event from '@utils/types/event';
 import { createEvent } from '@utils/server/db';
 
-import serviceAccount from '@utils/serviceAccountKey.json';
+import serviceAccount from '@utils/serviceAccountKey';
 
 export default async function handler(
   req: NextApiRequest,

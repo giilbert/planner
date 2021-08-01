@@ -1,10 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import admin from 'firebase-admin';
-import { ServiceAccount } from '@google-cloud/storage';
 
 import { getEvents } from '@utils/server/db';
 
-import serviceAccount from '@utils/serviceAccountKey.json';
+import serviceAccount from '@utils/serviceAccountKey';
 
 export default async function handler(
   req: NextApiRequest,
