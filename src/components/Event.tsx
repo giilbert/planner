@@ -7,7 +7,11 @@ export default function Event(props: IEvent) {
     <div className={styles.container}>
       <h1>{props.title}</h1>
       <hr />
-      <p>{props.description}</p>
+      <div>
+        {props.description.split('\n').map((i, key) => {
+          return <div key={key}>{i}</div>;
+        })}
+      </div>
 
       <p className={styles.dateTime}>
         {new Date(props.dateTime).toLocaleString('en-us', {

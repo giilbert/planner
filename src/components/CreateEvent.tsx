@@ -1,5 +1,12 @@
 import { useEffect, createRef, useState } from 'react';
-import { Formik, Form, Field, ErrorMessage, FieldProps } from 'formik';
+import {
+  Formik,
+  Form,
+  Field,
+  ErrorMessage,
+  FieldProps,
+  FormikProps,
+} from 'formik';
 import firebase from 'firebase';
 import { EventEmitter } from 'events';
 
@@ -127,11 +134,14 @@ export default function CreateEvent({ close }: Props) {
               </span>
             </div>
 
+            {/* descriptio input */}
             <div className={styles.inputContainer}>
               <p>
                 DESCRIPTION <span>(OPTIONAL)</span>
               </p>
-              <Field name="description" type="text" />
+              <Field name="description">
+                {({ form }: FieldProps) => <TextareaInput {...form} />}
+              </Field>
               <span className={styles.errorMessage}>
                 <ErrorMessage name="description" />
               </span>
@@ -177,6 +187,36 @@ export default function CreateEvent({ close }: Props) {
         </Formik>
       </div>
     </div>
+  );
+}
+
+const maxLength = 300;
+// throttle setLength()
+let setLengthTimeout: NodeJS.Timeout;
+function TextareaInput(form: FormikProps<any>) {
+  const [length, setLength] = useState(0);
+  return (
+    <>
+      <textarea
+        value={form.values['description']}
+        className={styles.input}
+        onChange={(e) => {
+          const value = e.target.value;
+
+          if (value.length <= maxLength)
+            form.setFieldValue('description', value);
+
+          clearTimeout(setLengthTimeout);
+          setLengthTimeout = setTimeout(() => {
+            setLength(value.length <= maxLength ? value.length : maxLength);
+          }, 200);
+        }}
+      />
+      <p>
+        {length} / {maxLength} <br />
+        {length >= maxLength && 'You reached to max description length'}
+      </p>
+    </>
   );
 }
 

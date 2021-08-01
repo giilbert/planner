@@ -34,7 +34,8 @@
   flex-direction: column;
 }
 
-.form > .inputContainer > input {
+.form > .inputContainer > input,
+.form > .inputContainer > textarea {
   border-radius: 0;
   border: none;
   outline: none;
@@ -47,6 +48,16 @@
 
 .form > .inputContainer > input:focus {
   box-shadow: #85ceff 0px 2px 0px 0px;
+}
+
+.form > .inputContainer > textarea {
+  resize: none;
+  height: 120px;
+  transition: background-color 100ms linear;
+}
+
+.form > .inputContainer > textarea:focus {
+  background-color: #f0f0f0;
 }
 
 .inputContainer {
