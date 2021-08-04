@@ -6,6 +6,7 @@ import GoogleButton from 'react-google-button';
 import Spinner from '@components/Spinner';
 import EventsView from '@components/EventsView';
 import Navbar from '@components/Navbar';
+import Calendar from '@components/Calendar';
 
 import styles from '@css/index.module.css';
 
@@ -48,10 +49,12 @@ export default function IndexPage() {
         <Navbar />
         <div className={styles.mainContent}>
           <EventsView />
+          <Calendar />
         </div>
       </>
     );
 
+  // not authenticated page
   return (
     <div className={styles.center}>
       <Head>

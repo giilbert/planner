@@ -1,0 +1,15 @@
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem 0.5rem;
+  border: #ddd solid 1px;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin: 0.4rem;
+  height: calc(100vh - 6rem);
+  overflow: auto;
+}
+
+.calendarCell > p {
+  margin: 0;
+}

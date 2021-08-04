@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import admin from 'firebase-admin';
 
-import { getEvents } from '@utils/server/db';
+import { getEvents, getEventsInMonth } from '@utils/server/db';
 
 import serviceAccount from '@utils/serviceAccountKey';
 
@@ -30,7 +30,17 @@ export default async function handler(
   }
 
   const user = await admin.auth().verifyIdToken(idToken);
-  const events = await getEvents(user.uid);
 
+  // filters events by the month
+  const month = req.query.month as string;
+  if (month) {
+    console.log(month);
+    const events = await getEventsInMonth(user.uid, parseInt(month));
+    res.status(200).json(events);
+    return;
+  }
+
+  // no filter, limit = 20
+  const events = await getEvents(user.uid);
   res.status(200).json(events);
 }

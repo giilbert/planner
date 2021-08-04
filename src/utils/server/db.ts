@@ -18,6 +18,26 @@ async function getEvents(authorId: string) {
     .find({
       authorId,
     })
+    .limit(20)
+    .sort({
+      dateTime: 1,
+    })
+    .toArray();
+
+  client.close();
+
+  return data;
+}
+
+async function getEventsInMonth(authorId: string, month: number) {
+  const client = await connect();
+  const data: Event[] = await client
+    .db('planner-main')
+    .collection('events')
+    .find({
+      'date.month': month,
+    })
+    .limit(20)
     .sort({
       dateTime: 1,
     })
@@ -34,4 +54,4 @@ async function createEvent(event: Event) {
   client.close();
 }
 
-export { getEvents, createEvent };
+export { getEvents, getEventsInMonth, createEvent };

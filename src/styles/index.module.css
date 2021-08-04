@@ -16,5 +16,8 @@
 }
 
 .mainContent {
-  margin-top: 4rem; /* navbar height plus a little bit */
+  display: grid;
+  grid-template-columns: 300px auto;
+  gap: 1.5rem;
+  margin-top: 3rem; /* navbar height */
 }
