@@ -43,6 +43,8 @@ export default function CreateEvent({ close }: Props) {
       return;
     }
 
+    console.log(values);
+
     const res = await fetch('/api/createEvent', {
       method: 'POST',
       headers: {

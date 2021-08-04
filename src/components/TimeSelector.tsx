@@ -85,14 +85,15 @@ function TimeSelector({ setFieldValue }: FormikProps<any>) {
 
         <Toggle
           value={currentTime.pm}
-          onChange={(on) => {
+          onChange={(pm) => {
+            console.log('is pm: ' + pm);
             setCurrentTime({
               ...currentTime,
-              pm: on,
+              pm,
             });
           }}
-          onText={'PM'}
-          offText={'AM'}
+          onText={'AM'}
+          offText={'PM'}
         />
       </div>
     </div>
