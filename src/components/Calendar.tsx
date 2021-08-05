@@ -57,7 +57,9 @@ export default function Calendar() {
                 .get(i + 1)
                 ?.slice(0, 3)
                 .map((v, i) => (
-                  <p key={i}>{v.title}</p>
+                  <p key={i} className={styles.eventTag}>
+                    {v.title}
+                  </p>
                 ))}
             </div>
           );
