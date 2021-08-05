@@ -92,8 +92,8 @@ function TimeSelector({ setFieldValue }: FormikProps<any>) {
               pm,
             });
           }}
-          onText={'AM'}
-          offText={'PM'}
+          onText={'PM'}
+          offText={'AM'}
         />
       </div>
     </div>
@@ -114,8 +114,8 @@ function Toggle({
   const [on, setOn] = useState(value);
 
   const toggle = () => {
+    onChange(!on);
     setOn(!on);
-    onChange(on);
   };
 
   if (on)
