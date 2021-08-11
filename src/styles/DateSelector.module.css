@@ -59,13 +59,15 @@ i.classicInput > input[type='number'] {
 
 .calendarHead {
   margin: auto;
-  width: 20rem;
+  width: 100%;
+  max-width: 20rem;
   display: grid;
   grid-template-columns: 3rem auto 3rem;
 }
 
 .calendarHead p {
   font-size: 2rem;
+  width: 100%;
   margin: 0;
   text-align: center;
 }
@@ -127,4 +129,25 @@ i.classicInput > input[type='number'] {
 
 .weekend {
   color: #ff4f4f;
+}
+
+@media screen and (max-width: 550px) {
+  .calendarCell,
+  .calendarCellSelected {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .calendarCell,
+  .calendarCellSelected {
+    font-size: 14px;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .calendarHead p {
+    font-size: 1.5rem;
+  }
 }

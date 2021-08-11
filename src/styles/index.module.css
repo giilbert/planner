@@ -21,3 +21,10 @@
   gap: 1.5rem;
   margin-top: 3rem; /* navbar height */
 }
+
+@media screen and (max-width: 600px) {
+  .mainContent {
+    display: flex;
+    flex-direction: column;
+  }
+}

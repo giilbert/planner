@@ -33,37 +33,39 @@ export default function Calendar() {
   const offset = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
 
   return (
-    <div
-      className={styles.calendar}
-      style={{
-        gridTemplateRows: offset === 6 ? 'repeat(6, 1fr)' : 'repeat(5, 1fr)',
-      }}
-    >
-      {Array(offset)
-        .fill(0)
-        .map((_, i) => (
-          <p key={i + ' empty'}></p>
-        ))}
+    <div className={styles.scrollContainer}>
+      <div
+        className={styles.calendar}
+        style={{
+          gridTemplateRows: offset === 6 ? 'repeat(6, 1fr)' : 'repeat(5, 1fr)',
+        }}
+      >
+        {Array(offset)
+          .fill(0)
+          .map((_, i) => (
+            <p key={i + ' empty'}></p>
+          ))}
 
-      {Array(numberOfDays[today.getMonth()])
-        .fill(0)
-        .map((_, i) => {
-          return (
-            <div key={i} className={styles.calendarCell}>
-              {/* +1, arrays start at 0 */}
-              <p>{i + 1}</p>
+        {Array(numberOfDays[today.getMonth()])
+          .fill(0)
+          .map((_, i) => {
+            return (
+              <div key={i} className={styles.calendarCell}>
+                {/* +1, arrays start at 0 */}
+                <p>{i + 1}</p>
 
-              {events
-                .get(i + 1)
-                ?.slice(0, 3)
-                .map((v, i) => (
-                  <p key={i} className={styles.eventTag}>
-                    {v.title}
-                  </p>
-                ))}
-            </div>
-          );
-        })}
+                {events
+                  .get(i + 1)
+                  ?.slice(0, 3)
+                  .map((v, i) => (
+                    <p key={i} className={styles.eventTag}>
+                      {v.title}
+                    </p>
+                  ))}
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }
