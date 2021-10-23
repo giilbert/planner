@@ -1,11 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { events } from '@components/CreateEvent';
-import styles from '@css/EventsView.module.css';
+import Dropdown from '@components/Dropdown';
 
 import Event from './Event';
 import withAuth from '@utils/authFetcher';
 import IEvent from '@utils/types/event';
+
+import styles from '@css/EventsView.module.css';
 
 export default function EventsView() {
   const { data, error, revalidate } = useSWR<IEvent[]>(
@@ -29,21 +31,26 @@ export default function EventsView() {
 
   return (
     <div className={styles.container}>
-      <p className={styles.label}>TODAY</p>
-      {todayEvents.map((v, i) => {
-        return <Event {...v} key={i + ' today'} />;
-      })}
-
-      <p className={styles.label}>TOMMOROW</p>
-      {tommorowEvents.map((v, i) => (
-        <Event {...v} key={i + ' tommorow'} />
-      ))}
-
-      <p className={styles.label}>ALL</p>
-      {data.map((v, i) => (
-        <Event {...v} key={i + ' all'} />
-      ))}
+      <EventGroup name={'TODAY'} data={todayEvents} />
+      <EventGroup name={'TOMMOROW'} data={tommorowEvents} />
+      <EventGroup name={'ALL'} data={data} />
     </div>
+  );
+}
+
+interface EventGroupProps {
+  name: string;
+  data: IEvent[];
+}
+
+function EventGroup({ name, data }: EventGroupProps) {
+  return (
+    <Dropdown
+      content={data.map((event, i) => (
+        <Event {...event} key={i} />
+      ))}
+      label={<p>{name}</p>}
+    />
   );
 }
 

@@ -6,23 +6,8 @@
   padding: 0.5rem;
 }
 
-.container > * {
+.container * {
   margin-bottom: 0.4rem;
-}
-
-.label {
-  margin: 1rem 0 0.3rem 0;
-  color: #555;
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.label::before {
-  content: '一 ';
-}
-
-.label::after {
-  content: ' 一';
 }
 
 @media screen and (max-width: 600px) {

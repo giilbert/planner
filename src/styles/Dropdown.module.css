@@ -1,0 +1,40 @@
+.container {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.label {
+  margin: 1rem 0 0.3rem 0;
+  display: flex;
+}
+
+.label p {
+  color: #555;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.label p::before {
+  content: '一 ';
+}
+
+.label p::after {
+  content: ' 一';
+}
+
+.label button {
+  background-color: transparent;
+  border: none;
+  margin-left: 0.3rem;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.label button:hover {
+  cursor: pointer;
+}
+
+.label button svg {
+  transition: transform 100ms linear;
+}
