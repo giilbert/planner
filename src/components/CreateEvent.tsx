@@ -43,8 +43,6 @@ export default function CreateEvent({ close }: Props) {
       return;
     }
 
-    console.log(values);
-
     const res = await fetch('/api/createEvent', {
       method: 'POST',
       headers: {
@@ -70,9 +68,7 @@ export default function CreateEvent({ close }: Props) {
       json = await res.json();
     } catch {}
 
-    if (json?.error) {
-      setError(json.error);
-    }
+    if (json?.error) setError(json.error);
 
     events.emit('change');
     close();
@@ -112,20 +108,7 @@ export default function CreateEvent({ close }: Props) {
             },
           }}
           onSubmit={formSubmit}
-          validate={(values) => {
-            const errors: {
-              [key: string]: string;
-            } = {};
-            if (values.title.trim() === '') {
-              errors.title = 'Title cannot be empty';
-            }
-
-            if (!validateDate(values.date)) {
-              errors.date = 'Invalid date';
-            }
-
-            return errors;
-          }}
+          validate={validateForm}
         >
           <Form className={styles.form}>
             <div className={styles.inputContainer}>
@@ -136,7 +119,7 @@ export default function CreateEvent({ close }: Props) {
               </span>
             </div>
 
-            {/* descriptio input */}
+            {/* description input */}
             <div className={styles.inputContainer}>
               <p>
                 DESCRIPTION <span>(OPTIONAL)</span>
@@ -216,10 +199,25 @@ function TextareaInput(form: FormikProps<any>) {
       />
       <p>
         {length} / {maxLength} <br />
-        {length >= maxLength && 'You reached to max description length'}
+        {length >= maxLength && "You've reached the max description length"}
       </p>
     </>
   );
 }
+
+const validateForm = (values: any) => {
+  const errors: {
+    [key: string]: string;
+  } = {};
+  if (values.title.trim() === '') {
+    errors.title = 'Title cannot be empty';
+  }
+
+  if (!validateDate(values.date)) {
+    errors.date = 'Invalid date';
+  }
+
+  return errors;
+};
 
 export { events };

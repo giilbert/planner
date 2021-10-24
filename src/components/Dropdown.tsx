@@ -43,13 +43,7 @@ function Dropdown({ label, content, current }: DropdownProps) {
         </button>
       </div>
 
-      <div
-        style={{
-          display: showing ? '' : 'none',
-        }}
-      >
-        {content}
-      </div>
+      {showing && content}
     </div>
   );
 }

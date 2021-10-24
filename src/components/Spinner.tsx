@@ -1,3 +1,5 @@
+// the loading icons
+
 import Image from 'next/image';
 import styles from '@css/Spinner.module.css';
 

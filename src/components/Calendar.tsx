@@ -24,7 +24,6 @@ export default function Calendar() {
     if (!events.get(v.date.date)) events.set(v.date.date, []);
     const current = events.get(v.date.date) as Event[];
 
-    console.log(v);
     events.set(v.date.date, current.concat(v));
   });
 

@@ -32,12 +32,6 @@ export default async function handler(
 
   const user = await admin.auth().verifyIdToken(idToken);
 
-  console.log({
-    ...req.body,
-    authorId: user.uid,
-    createdAt: Date.now(),
-  });
-
   const complete = isACompleteEvent({
     ...req.body,
     authorId: user.uid,
@@ -61,6 +55,7 @@ export default async function handler(
   res.status(200).end();
 }
 
+// check if all the data for an event is completed and valid
 function isACompleteEvent(o: Event): boolean {
   return !(
     Object.values({

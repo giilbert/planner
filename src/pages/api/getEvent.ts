@@ -34,7 +34,6 @@ export default async function handler(
   // filters events by the month
   const month = req.query.month as string;
   if (month) {
-    console.log(month);
     const events = await getEventsInMonth(user.uid, parseInt(month));
     res.status(200).json(events);
     return;

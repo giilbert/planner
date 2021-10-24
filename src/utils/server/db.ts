@@ -10,7 +10,6 @@ async function connect() {
 }
 
 async function getEvents(authorId: string) {
-  console.log('fetching from db');
   const client = await connect();
   const data: Event[] = await client
     .db('planner-main')

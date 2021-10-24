@@ -2,10 +2,8 @@
   padding: 1rem;
   border: #aaa solid 1px;
   border-radius: 2px;
-  box-shadow: none;
-  transform: none;
-
-  transition: box-shadow linear 100ms, transform linear 100ms;
+  box-sizing: border-box;
+  transition: box-shadow linear 100ms;
 }
 
 /* title */
@@ -30,8 +28,7 @@
 
 .container:hover {
   cursor: pointer;
-  box-shadow: #0004 3px 5px 8px 0px;
-  transform: scale(102%);
+  box-shadow: inset 0 -16px 0 -8px #85ceff;
 }
 
 .dateTime {

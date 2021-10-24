@@ -31,9 +31,9 @@ export default function EventsView() {
 
   return (
     <div className={styles.container}>
-      <EventGroup name={'TODAY'} data={todayEvents} />
-      <EventGroup name={'TOMMOROW'} data={tommorowEvents} />
-      <EventGroup name={'ALL'} data={data} />
+      <EventGroup name={'TODAY'} data={todayEvents} isShowing={true} />
+      <EventGroup name={'TOMMOROW'} data={tommorowEvents} isShowing={false} />
+      <EventGroup name={'ALL'} data={data} isShowing={false} />
     </div>
   );
 }
@@ -41,27 +41,27 @@ export default function EventsView() {
 interface EventGroupProps {
   name: string;
   data: IEvent[];
+  isShowing: boolean;
 }
 
-function EventGroup({ name, data }: EventGroupProps) {
+function EventGroup({ name, data, isShowing }: EventGroupProps) {
   return (
     <Dropdown
       content={data.map((event, i) => (
         <Event {...event} key={i} />
       ))}
       label={<p>{name}</p>}
+      current={isShowing}
     />
   );
 }
 
 function filterToday(data: IEvent[]) {
-  const today = new Date();
-  return data.filter((v) => new Date(v.dateTime).getDate() === today.getDate());
+  const today = new Date().getDate();
+  return data.filter((v) => new Date(v.dateTime).getDate() === today);
 }
 
 function filterTommorow(data: IEvent[]) {
-  const today = new Date();
-  return data.filter(
-    (v) => new Date(v.dateTime).getDate() === today.getDate() + 1
-  );
+  const tommorow = new Date().getDate() + 1;
+  return data.filter((v) => new Date(v.dateTime).getDate() === tommorow);
 }

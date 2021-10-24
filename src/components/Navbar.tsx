@@ -42,6 +42,7 @@ export default function Navbar() {
         Create Event
       </button>
 
+      {/* user profile and authentication button */}
       <div className={styles.right}>
         <div
           style={{

@@ -19,6 +19,7 @@ function TimeSelector({ setFieldValue }: FormikProps<any>) {
     <div className={styles.center}>
       <div className={styles.container}>
         <div className={styles.inputContainer}>
+          {/* hours */}
           <input
             className={styles.input}
             type="number"
@@ -51,6 +52,7 @@ function TimeSelector({ setFieldValue }: FormikProps<any>) {
           />
         </div>
         <p className={styles.colon}>:</p>
+        {/* minutes */}
         <div className={styles.inputContainer}>
           <input
             type="number"
@@ -86,7 +88,6 @@ function TimeSelector({ setFieldValue }: FormikProps<any>) {
         <Toggle
           value={currentTime.pm}
           onChange={(pm) => {
-            console.log('is pm: ' + pm);
             setCurrentTime({
               ...currentTime,
               pm,

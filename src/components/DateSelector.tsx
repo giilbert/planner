@@ -23,6 +23,7 @@ function DateSelector({ setFieldValue }: FormikProps<any>) {
 
   return (
     <div>
+      {/* classic MM/DD/YYYY input */}
       <div className={styles.classicInput}>
         <select
           className={styles.select}
@@ -167,6 +168,7 @@ function Calendar({
 
   return (
     <div className={styles.calendar}>
+      {/* add a bunch of empty spaces at the front for dates that dont start on sunday */}
       {offset !== 0 &&
         Array(offset)
           .fill(0)
