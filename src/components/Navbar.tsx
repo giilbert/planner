@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import firebase from 'firebase';
 import CreateEvent from './CreateEvent';
@@ -9,6 +9,10 @@ import commons from '@css/commons.module.css';
 
 export default function Navbar() {
   const [eventCreatorActive, setActive] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = eventCreatorActive ? 'hidden' : 'auto';
+  }, [eventCreatorActive]);
 
   return (
     <div className={styles.container}>

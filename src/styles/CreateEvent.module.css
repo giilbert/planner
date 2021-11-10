@@ -7,6 +7,7 @@
   background-color: #0007;
   display: flex;
   justify-content: center;
+  z-index: 100;
 }
 
 .main {
@@ -100,4 +101,10 @@
 .errorMessage {
   color: #ff4d4d;
   font-size: 0.8rem;
+}
+
+@media screen and (max-width: 600px) {
+  .main {
+    margin: 0;
+  }
 }
