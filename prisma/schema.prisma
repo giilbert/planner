@@ -1,0 +1,29 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_DB_URL")
+}
+
+model User {
+  id        String   @id @map("_id") @default(dbgenerated()) @db.ObjectId
+  createdAt DateTime @default(now())
+  email     String   @unique
+  name      String
+  username  String   @unique
+  password  String
+  events    Event[]
+}
+
+model Event {
+  id          String   @id @map("_id") @default(dbgenerated()) @db.ObjectId
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String   @db.ObjectId
+  createdAt   DateTime @default(now())
+  date        DateTime
+  title       String
+  description String
+}

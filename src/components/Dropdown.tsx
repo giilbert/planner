@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, createRef, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import styles from '@css/Dropdown.module.css';
 
 interface DropdownProps {

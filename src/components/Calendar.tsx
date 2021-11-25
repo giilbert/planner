@@ -2,29 +2,32 @@
 import styles from '@css/Calendar.module.css';
 import useSWR from 'swr';
 import Event from '@utils/types/event';
-import withAuth from '@utils/authFetcher';
 import { numberOfDays } from '@utils/dateUtils';
 
 export default function Calendar() {
   const today = new Date();
 
-  const { data, error } = useSWR<Event[]>(
-    [`/api/getEvent?month=${today.getMonth()}`],
-    withAuth
-  );
+  const { data, error } = useSWR<Event[]>([
+    `/api/getEvent?month=${today.getMonth()}&year=${today.getFullYear()}`,
+  ]);
 
   if (error) return <p>an error occurred loading calendar data</p>;
   if (!data) return <p>loading</p>;
+
+  // turn the date string in data into a Date object
+  data.forEach((v) => {
+    v.date = new Date(v.date);
+  });
 
   // a map containing events, where the data maps to the events
   const events = new Map<number, Event[]>();
 
   // turn array data into a map
   data.forEach((v) => {
-    if (!events.get(v.date.date)) events.set(v.date.date, []);
-    const current = events.get(v.date.date) as Event[];
+    if (!events.get(v.date.getDate())) events.set(v.date.getDate(), []);
+    const current = events.get(v.date.getDate()) as Event[];
 
-    events.set(v.date.date, current.concat(v));
+    events.set(v.date.getDate(), current.concat(v));
   });
 
   // offset from the first calendar cell to the first day, empty cells

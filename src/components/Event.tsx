@@ -3,7 +3,7 @@ import IEvent from '@utils/types/event';
 import styles from '@css/Event.module.css';
 
 export default function Event(props: IEvent) {
-  const date = new Date(props.dateTime);
+  const date = props.date;
   return (
     <div className={styles.container}>
       <h1>{props.title}</h1>

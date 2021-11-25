@@ -1,27 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import admin from 'firebase-admin';
+import { getSession } from 'next-auth/react';
+import { PrismaClient } from '.prisma/client';
+import { SessionWithUserId } from './auth/[...nextauth]';
 
-import { getEvents, getEventsInMonth } from '@utils/server/db';
-
-import serviceAccount from '@utils/serviceAccountKey';
+const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // log into firebase admin sdk
-  if (admin.apps.length === 0)
-    admin.initializeApp({
-      credential: admin.credential.cert({
-        clientEmail: serviceAccount.client_email,
-        privateKey: serviceAccount.private_key,
-        projectId: serviceAccount.project_id,
-      }),
-    });
+  const session = (await getSession({ req })) as SessionWithUserId | null;
 
-  const idToken = req.headers.authorization?.split(' ')[1];
-
-  if (!idToken) {
+  if (!session) {
     res.status(403).json({
       error: 'Not authenticated',
     });
@@ -29,17 +19,60 @@ export default async function handler(
     return;
   }
 
-  const user = await admin.auth().verifyIdToken(idToken);
-
-  // filters events by the month
-  const month = req.query.month as string;
-  if (month) {
-    const events = await getEventsInMonth(user.uid, parseInt(month));
-    res.status(200).json(events);
+  if (req.query.month) {
+    await month(
+      session,
+      res,
+      parseInt(req.query.month as string),
+      parseInt(req.query.year as string)
+    );
+  } else {
+    // take many
+    await many(session, res);
     return;
   }
+}
 
-  // no filter, limit = 20
-  const events = await getEvents(user.uid);
+async function month(
+  session: SessionWithUserId,
+  res: NextApiResponse,
+  month: number,
+  year: number
+) {
+  prisma.$connect();
+
+  const events = await prisma.event.findMany({
+    take: 10,
+    where: {
+      authorId: session.user?.id,
+      date: {
+        gte: new Date(year, month, 1),
+        // TODO: leap years
+        // FIXME: time zone issues?
+        lt: new Date(year, month + 1),
+      },
+    },
+  });
+
+  prisma.$disconnect();
+
+  res.status(200).json(events);
+}
+
+async function many(session: SessionWithUserId, res: NextApiResponse) {
+  prisma.$connect();
+
+  const events = await prisma.event.findMany({
+    take: 20,
+    where: {
+      authorId: session.user?.id,
+    },
+    orderBy: {
+      date: 'asc',
+    },
+  });
+
+  prisma.$disconnect();
+
   res.status(200).json(events);
 }

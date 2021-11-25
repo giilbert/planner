@@ -1,14 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import firebase from 'firebase';
 import CreateEvent from './CreateEvent';
 
 import styles from '@css/Navbar.module.css';
 import commons from '@css/commons.module.css';
+import { signOut, useSession } from 'next-auth/react';
 
 export default function Navbar() {
   const [eventCreatorActive, setActive] = useState(false);
+  const session = useSession({
+    required: true,
+  });
 
   useEffect(() => {
     document.body.style.overflow = eventCreatorActive ? 'hidden' : 'auto';
@@ -48,18 +51,14 @@ export default function Navbar() {
 
       {/* user profile and authentication button */}
       <div className={styles.right}>
-        <div
-          style={{
-            backgroundImage: `url("${firebase.auth().currentUser?.photoURL}")`,
-          }}
-          className={styles.profilePicture}
-        />
         <p className={styles.nameText}>
-          {firebase.auth().currentUser?.displayName}
+          Signed in as {session.data?.user?.name}
         </p>
         <p
           onClick={() => {
-            firebase.auth().signOut();
+            signOut({
+              callbackUrl: '/',
+            });
           }}
           className={commons.textButton}
         >

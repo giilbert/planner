@@ -1,28 +1,29 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import admin from 'firebase-admin';
 
 import Event from '@utils/types/event';
-import { createEvent } from '@utils/server/db';
 
-import serviceAccount from '@utils/serviceAccountKey';
+import { getSession } from 'next-auth/react';
+import { PrismaClient } from '.prisma/client';
+import { Session } from 'next-auth';
+
+interface SessionWithUserId extends Session {
+  expires: string;
+  user: {
+    name: string;
+    email: string;
+    id: string | undefined;
+  };
+}
+
+const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // log into firebase admin sdk
-  if (admin.apps.length === 0)
-    admin.initializeApp({
-      credential: admin.credential.cert({
-        clientEmail: serviceAccount.client_email,
-        privateKey: serviceAccount.private_key,
-        projectId: serviceAccount.project_id,
-      }),
-    });
+  const session = (await getSession({ req })) as SessionWithUserId | null;
 
-  const idToken = req.headers.authorization?.split(' ')[1];
-
-  if (!idToken) {
+  if (!session || !session.user.id) {
     res.status(403).json({
       error: 'Not authenticated',
     });
@@ -30,12 +31,9 @@ export default async function handler(
     return;
   }
 
-  const user = await admin.auth().verifyIdToken(idToken);
-
   const complete = isACompleteEvent({
     ...req.body,
-    authorId: user.uid,
-    createdAt: Date.now(),
+    authorId: session.user?.id,
   });
 
   if (!complete) {
@@ -46,11 +44,18 @@ export default async function handler(
     return;
   }
 
-  await createEvent({
-    ...req.body,
-    authorId: user.uid,
-    createdAt: Date.now(),
+  await prisma.$connect();
+
+  await prisma.event.create({
+    data: {
+      authorId: session.user.id,
+      date: new Date(req.body.dateTime),
+      title: req.body.title,
+      description: req.body.description,
+    },
   });
+
+  await prisma.$disconnect();
 
   res.status(200).end();
 }
@@ -61,7 +66,7 @@ function isACompleteEvent(o: Event): boolean {
     Object.values({
       title: o.title === '',
       authorId: !o.authorId,
-      createdAt: !o.createdAt,
+      // @ts-ignore
       dateTime: isNaN(o.dateTime),
     }).find((v) => v === true) ?? false
   );

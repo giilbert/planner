@@ -7,7 +7,6 @@ import {
   FieldProps,
   FormikProps,
 } from 'formik';
-import firebase from 'firebase';
 import { EventEmitter } from 'events';
 
 import DateSelector from './DateSelector';
@@ -45,16 +44,13 @@ export default function CreateEvent({ close }: Props) {
 
     const res = await fetch('/api/createEvent', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${await firebase
-          .auth()
-          .currentUser?.getIdToken()}`,
-      },
       body: JSON.stringify({
         ...values,
         dateTime: toTimestamp(values.date, values.time),
       }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
     if (!res.ok) {

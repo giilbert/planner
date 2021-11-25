@@ -3,17 +3,7 @@ interface Event {
   description: string;
   createdAt: Date;
   authorId: string;
-  dateTime: number;
-  date: {
-    month: number;
-    date: number;
-    year: number;
-  };
-  time: {
-    hour: number;
-    minutes: number;
-    pm: boolean;
-  };
+  date: Date;
 }
 
 export default Event;

@@ -4,16 +4,16 @@ import { events } from '@components/CreateEvent';
 import Dropdown from '@components/Dropdown';
 
 import Event from './Event';
-import withAuth from '@utils/authFetcher';
 import IEvent from '@utils/types/event';
 
 import styles from '@css/EventsView.module.css';
 
 export default function EventsView() {
-  const { data, error, revalidate } = useSWR<IEvent[]>(
-    ['/api/getEvent'],
-    withAuth
-  );
+  const { data, error, revalidate } = useSWR<IEvent[]>(['/api/getEvent']);
+  // transform each jsonable date string into a Date object
+  data?.forEach((v) => {
+    v.date = new Date(v.date);
+  });
 
   useEffect(() => {
     events.on('change', revalidate);
@@ -58,10 +58,10 @@ function EventGroup({ name, data, isShowing }: EventGroupProps) {
 
 function filterToday(data: IEvent[]) {
   const today = new Date().getDate();
-  return data.filter((v) => new Date(v.dateTime).getDate() === today);
+  return data.filter((v) => v.date.getDate() === today);
 }
 
 function filterTommorow(data: IEvent[]) {
   const tommorow = new Date().getDate() + 1;
-  return data.filter((v) => new Date(v.dateTime).getDate() === tommorow);
+  return data.filter((v) => v.date.getDate() === tommorow);
 }
