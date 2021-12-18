@@ -41,15 +41,21 @@ async function month(
 ) {
   prisma.$connect();
 
+  console.log(month);
   const events = await prisma.event.findMany({
     take: 10,
     where: {
       authorId: session.user?.id,
       date: {
-        gte: new Date(year, month, 1),
+        gte: new Date(`${year}-${month + 1}-01T00:00:00.000`),
         // TODO: leap years
+        // TODO: ONE DIGIT DATES!
         // FIXME: time zone issues?
-        lt: new Date(year, month + 1),
+        lt: new Date(
+          `${month === 11 ? (year + 1).toString() : year.toString()}-${
+            month === 11 ? '01' : month.toString()
+          }-01T00:00:00.000Z`
+        ),
       },
     },
   });

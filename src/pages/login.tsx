@@ -5,6 +5,7 @@ import styles from '@css/registerAndLogin.module.css';
 import Spinner from '@components/Spinner';
 import { useState } from 'react';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
 
 const schema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
@@ -76,6 +77,18 @@ function RegisterPage() {
           </button>
 
           <span className={styles.errorMessage}>{formError}</span>
+
+          <Link href="/register">
+            <a
+              style={{
+                color: 'cornflowerblue',
+                textDecoration: 'none',
+                marginTop: '10px',
+              }}
+            >
+              Create an account
+            </a>
+          </Link>
         </Form>
       </Formik>
     </div>
