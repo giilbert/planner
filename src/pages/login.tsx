@@ -5,6 +5,7 @@ import styles from '@css/registerAndLogin.module.css';
 import Spinner from '@components/Spinner';
 import { useState } from 'react';
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 
 const schema = Yup.object().shape({
@@ -18,6 +19,9 @@ function RegisterPage() {
 
   return (
     <div className={styles.pageContainer}>
+      <Head>
+        <title>Tempus | Login</title>
+      </Head>
       <Formik
         initialValues={{
           email: '',

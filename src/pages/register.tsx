@@ -1,8 +1,10 @@
-import { Form, Formik, Field, ErrorMessage, yupToFormErrors } from 'formik';
+import { Form, Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styles from '@css/registerAndLogin.module.css';
 import Spinner from '@components/Spinner';
 import { useState } from 'react';
+import Head from 'next/head';
+import Link from 'next/link';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
@@ -25,6 +27,9 @@ function RegisterPage() {
 
   return (
     <div className={styles.pageContainer}>
+      <Head>
+        <title>Tempus | Register</title>
+      </Head>
       <Formik
         initialValues={{
           name: '',
@@ -104,6 +109,18 @@ function RegisterPage() {
           >
             {!submitting ? 'Submit' : <Spinner width="25px" height="25px" />}
           </button>
+
+          <Link href="/login">
+            <a
+              style={{
+                color: 'cornflowerblue',
+                textDecoration: 'none',
+                marginTop: '10px',
+              }}
+            >
+              I already have an account
+            </a>
+          </Link>
         </Form>
       </Formik>
     </div>

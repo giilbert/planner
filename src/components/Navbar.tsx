@@ -6,6 +6,7 @@ import CreateEvent from './CreateEvent';
 import styles from '@css/Navbar.module.css';
 import commons from '@css/commons.module.css';
 import { signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [eventCreatorActive, setActive] = useState(false);
@@ -19,12 +20,22 @@ export default function Navbar() {
 
   return (
     <div className={styles.container}>
+      <Image
+        src="/tempus_logo.svg"
+        alt="Tempus Logo"
+        width="110"
+        height="45"
+        layout="fixed"
+        className={styles.logo}
+      />
+
       {eventCreatorActive &&
         createPortal(
           <CreateEvent close={() => setActive(false)} />,
           document.body
         )}
 
+      {/* create even button */}
       <button
         onClick={() => setActive(true)}
         className={`${commons.button} ${commons.buttonSmall} ${styles.createEventButton}`}

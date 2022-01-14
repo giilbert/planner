@@ -30,6 +30,7 @@ export default async function handler(
     });
     return;
   }
+
   if (
     await prisma.user.findUnique({
       where: {
@@ -42,6 +43,8 @@ export default async function handler(
     });
     return;
   }
+
+  // if email or username is not already in use, create the user
   await prisma.user.create({
     data: {
       name: data.name,

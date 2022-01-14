@@ -9,6 +9,7 @@
   z-index: 10;
   width: 100vw;
   height: 3rem;
+  padding-left: 1rem;
 }
 
 .container > *:not(button) {
@@ -23,7 +24,7 @@
 }
 
 .right > * {
-  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .nameText {
@@ -42,4 +43,35 @@
 
 .createEventButton > svg {
   margin-right: 0.5rem;
+}
+
+.createEventButton {
+  margin-left: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    width: 100vw;
+    align-items: unset;
+    height: unset;
+    padding: 0.5rem;
+  }
+
+  .createEventButton {
+    margin-left: 0;
+    margin-top: 0.2rem;
+    width: fit-content;
+  }
+
+  .right {
+    margin-left: 0;
+  }
+
+  .right * {
+    margin: 0.2rem 0.5rem 0.5rem 0;
+  }
 }
